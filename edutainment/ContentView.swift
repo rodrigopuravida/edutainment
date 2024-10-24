@@ -10,12 +10,14 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var selectedChoice: Int = 3
+    @State private var selectedChoice: Int = 7
     let choices = [3, 5, 7]
     
     @State private var tableChosen: String?
     
     @State  var answer: String
+    
+    @State var answerArray: [Int] = []
     
     var body: some View {
         VStack {
@@ -52,7 +54,7 @@ struct ContentView: View {
                 Spacer()
                 Button(action: {
                     tableChosen = "2"
-                    calculateMultiplication(tableChosen: tableChosen, numberChosen: selectedChoice)
+                    //calculateMultiplication(numberChosen: selectedChoice)
                 }) {
                     Text("2")
                         .font(.headline)
@@ -64,6 +66,10 @@ struct ContentView: View {
                 Spacer()
                 Button(action: {
                     tableChosen = "3"
+                    
+                    answerArray = calculateMultiplication(numberChosen: selectedChoice)
+                    print(selectedChoice)
+                    print(answerArray)
                 }) {
                     Text("3")
                         .font(.headline)
@@ -163,24 +169,31 @@ struct ContentView: View {
                 .clipShape(Capsule())
             }
             
-            HStack {
-                Text("3 x 4 =")
-                    .font(.headline)
-                TextField("Your answer here", text: $answer)
-                    
+            VStack {
+                ForEach(0..<answerArray.count, id: \.self) {
+                        Text("\(answerArray[$0])")
+                }
             }
-
+            
             Spacer()
         }
         .padding()
     }
     
-    func calculateMultiplication(tableChosen: String?, numberChosen: Int?) {
+    func calculateMultiplication(numberChosen: Int?) -> [Int] {
+        print("inside Method")
+        print(numberChosen)
+        var returnArray : [Int] = []
         
+        for _ in 1...numberChosen! {
+            returnArray.append(Int.random(in: 1...12))
         }
+        return returnArray
+    
+    }
     
 }
 
 #Preview {
-    ContentView(answer: "2")
+    ContentView(answer: "")
 }
