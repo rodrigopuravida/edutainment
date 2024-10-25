@@ -170,10 +170,17 @@ struct ContentView: View {
             }
             
             VStack {
-                ForEach(0..<answerArray.count, id: \.self) {
-                        Text("\(answerArray[$0])")
+                ForEach(0..<answerArray.count, id: \.self) { index in
+                    HStack {
+                        Text("\(tableChosen!) x \(answerArray[index]) = ")
+                            .font(.headline)
+                        TextField("Answer", text: $answer)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(width: 60) // Set width for the TextField if needed
+                    }
                 }
             }
+
             
             Spacer()
         }
